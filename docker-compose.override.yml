@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  innoloftwebapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  s_mysql:
+    environment:
+      MYSQL_DATABASE: 'InnoloftDb'
+      MYSQL_USER: 'sa'
+      MYSQL_PASSWORD: 'password12'
+      MYSQL_ROOT_PASSWORD: 'password12'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - InnoloftDb:/var/lib/mysql
+
+volumes:
+  InnoloftDb:
